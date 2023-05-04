@@ -1,6 +1,6 @@
 const { Worker, isMainThread, parentPort, workerData } = require('worker_threads');
-const NUM_ELEMENTS = 1000000;
-const numWorkers = 6;
+const NUM_ELEMENTS = 10000000;
+const numWorkers = 4;
 // const numWorkers = require('os').cpus().length;
 
 function merge(left, right) {
