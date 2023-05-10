@@ -1,7 +1,7 @@
 const { Worker, isMainThread, parentPort, workerData } = require('worker_threads');
 const { performance } = require('perf_hooks');
 
-const NUM_ELEMENTS = 1000000; // від 1000000
+const NUM_ELEMENTS = 1000000; // 1000000, 2500000, 5000000, 7000000, 8500000, 10000000, 20000000, 40000000
 const numWorkers = 4;
 // const numWorkers = require('os').cpus().length;
 
@@ -37,8 +37,8 @@ if (isMainThread) {
     const startBasic = performance.now();
     const sortedArray1 = mergeSort(unsortedArray);
     const endBasic = performance.now();
-    console.log('Basic merge sort time:', endBasic - startBasic + " ms");
-    console.log('Basic merge sort result:', sortedArray1);
+    console.log('Basic merge sort time:', endBasic - startBasic + ' ms');
+    // console.log('Basic merge sort result:', sortedArray1);
 
     // Parallel merge sort
     const startParallel = performance.now();
@@ -62,10 +62,13 @@ if (isMainThread) {
             sortedArray2 = merge(sortedArray2, result);
             if (sortedArray2.length === unsortedArray.length) {
                 const endParallel = performance.now();
-                console.log('Parallel merge sort time:', endParallel - startParallel + " ms");
-                console.log('Parallel merge sort result:', sortedArray2);
-                console.log("Speedup:", (endBasic - startBasic) / (endParallel - startParallel));
+                console.log('Parallel merge sort time:', endParallel - startParallel + ' ms');
+                // console.log('Parallel merge sort result:', sortedArray2);
+                console.log('Speedup:', (endBasic - startBasic) / (endParallel - startParallel));
                 console.log('Basic and parallel algorithms give the same result:', JSON.stringify(sortedArray1) === JSON.stringify(sortedArray2));
+                console.log('Number of workers:', numWorkers);
+                console.log('Number of elements:', NUM_ELEMENTS);
+                console.log(' ');
             }
         });
         worker.on('error', (err) => {
